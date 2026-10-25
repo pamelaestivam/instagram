@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Follower Analyzer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Follower Analyzer</h1>
+      <p class="sub">Find who doesn't follow you back on Instagram — <strong>@estivampam</strong>. Your data never leaves this browser.</p>
+    </header>
+
+    <section class="card" id="upload">
+      <details open>
+        <summary>How to get your data (2 minutes, no password needed)</summary>
+        <ol>
+          <li>Instagram app → <b>Settings and activity</b> → <b>Accounts Center</b> → <b>Your information and permissions</b> → <b>Export your information</b>.</li>
+          <li>Create export → your Instagram account → <b>Export to device</b>.</li>
+          <li>Under <b>Customize information</b> pick only <b>Followers and following</b>. Set date range <b>All time</b> and format <b>JSON</b>.</li>
+          <li>Wait for the email, download the ZIP and unzip it. The files are in <code>connections/followers_and_following/</code>.</li>
+        </ol>
+      </details>
+
+      <div id="drop" class="drop" tabindex="0">
+        <p><b>Drop the files or the unzipped folder here</b></p>
+        <p class="muted">needs <code>followers_1.json</code> and <code>following.json</code> (.html also works)</p>
+        <div class="row">
+          <label class="btn">Choose files<input id="pickFiles" type="file" multiple accept=".json,.html,.htm" hidden></label>
+          <label class="btn">Choose folder<input id="pickFolder" type="file" webkitdirectory hidden></label>
+        </div>
+      </div>
+      <p id="status" class="status" role="status"></p>
+    </section>
+
+    <section id="results" hidden>
+      <div class="stats" id="stats"></div>
+
+      <div class="card">
+        <h2>Followers gained per month</h2>
+        <div id="growth" class="growth"></div>
+      </div>
+
+      <div class="card">
+        <div class="tabs" id="tabs" role="tablist"></div>
+        <div class="toolbar">
+          <input id="search" type="search" placeholder="Search username…" aria-label="Search username">
+          <button class="btn" id="copy">Copy</button>
+          <button class="btn" id="csv">Download CSV</button>
+        </div>
+        <p id="hint" class="muted"></p>
+        <ul id="list" class="list"></ul>
+      </div>
+
+      <p class="muted foot">
+        Snapshots are saved only in this browser so the next upload can show who <b>left</b> since last time.
+        <button class="link" id="clear">Clear saved data</button>
+      </p>
+    </section>
+  </main>
+  <script src="parser.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
