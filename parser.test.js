@@ -11,6 +11,8 @@ test('kindFromName', () => {
   assert.equal(kindFromName('recently_unfollowed_profiles.json'), 'unfollowed');
   assert.equal(kindFromName('pending_follow_requests.html'), 'pending');
   assert.equal(kindFromName('profile.json'), null);
+  assert.equal(kindFromName('following_hashtags.json'), null);
+  assert.equal(kindFromName('recent_follow_requests.json'), null);
 });
 
 test('parses followers array (handle in value) and following object (handle in title)', () => {
@@ -31,6 +33,8 @@ test('parses html export', () => {
 test('ignores unrelated or invalid files', () => {
   assert.equal(parseExport('other.json', '{"a":1}'), null);
   assert.equal(parseExport('followers_1.json', 'not json'), null);
+  assert.equal(parseExport('following_hashtags.json', JSON.stringify({ relationships_following_hashtags: [titled('travel', 1)] })), null);
+  assert.equal(parseExport('close_friends.json', JSON.stringify([entry('x', 1)])), null);
 });
 
 test('analyze splits lists case-insensitively', () => {

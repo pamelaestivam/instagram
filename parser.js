@@ -13,11 +13,11 @@
   // recently_unfollowed_profiles.json, pending_follow_requests.json (.json or .html).
   function kindFromName(name) {
     const n = name.toLowerCase();
-    if (n.includes('recently_unfollowed')) return 'unfollowed';
-    if (n.includes('pending')) return 'pending';
-    if (n.includes('following')) return 'following';
-    if (n.includes('followers')) return 'followers';
-    return null;
+    if (/^recently_unfollowed_profiles\.(json|html?)$/.test(n)) return 'unfollowed';
+    if (/^pending_follow_requests\.(json|html?)$/.test(n)) return 'pending';
+    if (/^following\.(json|html?)$/.test(n)) return 'following';
+    if (/^followers(_\d+)?\.(json|html?)$/.test(n)) return 'followers';
+    return null; // e.g. following_hashtags.json must not be mistaken for following.json
   }
 
   function usersFromJson(json) {
@@ -28,8 +28,6 @@
       if (!key) return { kind: null, users: [] };
       entries = json[key];
       kind = LIST_KEYS[key] || null;
-    } else if (Array.isArray(json)) {
-      kind = 'followers'; // followers_N.json is a bare array
     }
     const users = [];
     for (const e of entries) {

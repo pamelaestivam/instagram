@@ -100,7 +100,7 @@
     $('tabs').replaceChildren(...tabs.map((t) => {
       const b = document.createElement('button');
       b.className = 'tab';
-      b.role = 'tab';
+      b.setAttribute('role', 'tab');
       b.setAttribute('aria-selected', String(t.id === state.tab));
       b.textContent = `${t.label} (${lists[t.id].length})`;
       b.onclick = () => { state.tab = t.id; render(); };
